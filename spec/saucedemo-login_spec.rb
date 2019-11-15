@@ -1,14 +1,17 @@
 require 'watir'
-require 'faker'
-
 
 standard_user = "standard_user"
 locked_out_user = "locked_out_user"
 problem_user = "problem_user"
 performance_glitch_user = "performance_glitch_user"
 password = "secret_sauce"
+invalid_password = "invalid"
 
 lock_out_error = "Epic sadface: Sorry, this user has been locked out."
+invalid_username_password_error = "Epic sadface: Username and password do not match any user in this service"
+username_required_error = "Epic sadface: Username is required"
+password_required_error = "Epic sadface: Password is required"
+
 
 describe "login : " do
   before(:each) do
@@ -25,15 +28,17 @@ describe "login : " do
     @browser.text_field(id: "password").set password
     @browser.button(value: "LOGIN").click
 
-#    @browser.url == "https://www.saucedemo.com/inventory.html" # FIXME
+    # NOTE : Probably not the best way to confirm successful log in - will need to eventually update this.
+    # check to make sure first image properly loads with correct file
     expect(@browser.a(id: "item_4_img_link")).to have_attributes(href: "https://www.saucedemo.com/inventory-item.html?id=4")
   end
 
-  it "locked_out_user - error message" do
+  it "ERROR HANDLING : locked_out_user" do
     @browser.text_field(id: "user-name").set locked_out_user
     @browser.text_field(id: "password").set password
     @browser.button(value: "LOGIN").click
 
+    # verify lock out error message displays
     expect(@browser.h3.text).to eq(lock_out_error)
   end
 
@@ -42,9 +47,38 @@ describe "login : " do
     @browser.text_field(id: "password").set password
     @browser.button(value: "LOGIN").click
 
+    # NOTE : Probably not the best way to confirm successful log in - will need to eventually update this.
+    # same check as in the "standard_user" test but in this case, test should fail because incorrect image is loaded causing it to be a broken image preview
     expect(@browser.a(id: "item_4_img_link")).to have_attributes(href: "https://www.saucedemo.com/inventory-item.html?id=4")
   end
 
   it "performance_glitch_user - successful" do
+    # not really sure how to test for performance glitch yet.
+    # need to try to understand what the actual issue is and how to quantify that to create this test.
+  end
+
+  it "ERROR HANDLING : standard_user - not successful" do
+    @browser.text_field(id: "user-name").set standard_user
+    @browser.text_field(id: "password").set invalid_password
+    @browser.button(value: "LOGIN").click
+
+    # verify lock out error message displays
+    expect(@browser.h3.text).to eq(invalid_username_password_error)
+  end
+
+  it "ERROR HANDLING : username is required" do
+    @browser.text_field(id: "password").set invalid_password
+    @browser.button(value: "LOGIN").click
+
+    # verify lock out error message displays
+    expect(@browser.h3.text).to eq(username_required_error)
+  end
+
+  it "ERROR HANDLING : password is required" do
+    @browser.text_field(id: "user-name").set standard_user
+    @browser.button(value: "LOGIN").click
+
+    # verify lock out error message displays
+    expect(@browser.h3.text).to eq(password_required_error)
   end
 end
