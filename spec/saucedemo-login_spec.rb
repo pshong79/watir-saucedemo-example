@@ -42,6 +42,7 @@ describe "login : " do
     expect(@browser.h3.text).to eq(lock_out_error)
   end
 
+  # NOTE : This test SHOULD fail because image file it is expecting is not the one that is actually loaded.
   it "problem_user - successful" do
     @browser.text_field(id: "user-name").set problem_user
     @browser.text_field(id: "password").set password
