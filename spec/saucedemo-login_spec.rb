@@ -88,7 +88,8 @@ describe "login : " do
   end
 
   it "ERROR HANDLING : password is required" do
-    # DESCRIPTION : This test verifies  error-handling for when the password field is blank.
+    # DESCRIPTION : This test verifies error-handling for when the password field is blank.
+
     @browser.text_field(id: "user-name").set standard_user
     @browser.button(value: "LOGIN").click
 
@@ -97,6 +98,8 @@ describe "login : " do
   end
 
   it "log out - successful" do
+    # DESCRIPTION : This test verifies successfully logging out.
+
     @browser.text_field(id: "user-name").set standard_user
     @browser.text_field(id: "password").set password
     @browser.button(value: "LOGIN").click
@@ -106,6 +109,6 @@ describe "login : " do
     @browser.a(id: "logout_sidebar_link").click
 
     # verify successful log out
-    expect(@browser.div(class: "login_logo").present?)
+    expect(@browser.div(class: "login_credentials_wrap").present?).to be true
   end
 end
