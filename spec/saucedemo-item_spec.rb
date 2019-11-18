@@ -31,6 +31,7 @@ describe "item : " do
 
   it "view - click name" do
     # DESCRIPTION : This test verifies pages loading the item's detail page when clicking the item's name.
+
     item_name = @browser.div(class: "inventory_item_name", :index => 5).text
 #    puts "item : " + item_name
     @browser.div(class: "inventory_item_name", :index => 5).click
@@ -41,6 +42,7 @@ describe "item : " do
 
   it "click back" do
     # DESCRIPTION : This test verifies pages loading correctly when using the "Back" button on the item details page.
+
     page_url = @browser.url
 #    puts "page_url : " + page_url
 
@@ -61,6 +63,7 @@ describe "item : " do
 
   it "browser back" do
     # DESCRIPTION : This test verifies pages loading correctly when using the "Back" button on the browser.
+
     page_url = @browser.url
 #    puts "page_url : " + page_url
 
@@ -80,7 +83,8 @@ describe "item : " do
 
   it "add to cart" do
     # DESCRIPTION : This test only verifies adding an item to the cart.
-    # It DOES NOT verify the item on the actual cart page.
+    #               It DOES NOT verify the item on the actual cart page.
+
     item_name = @browser.div(class: "inventory_item_name", :index => 3).text
 #    puts "item : " + item_name
     @browser.div(class: "inventory_item_name", :index => 3).click
