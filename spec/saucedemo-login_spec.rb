@@ -97,5 +97,15 @@ describe "login : " do
   end
 
   it "log out - successful" do
+    @browser.text_field(id: "user-name").set standard_user
+    @browser.text_field(id: "password").set password
+    @browser.button(value: "LOGIN").click
+
+    # log out
+    @browser.button(text: "Open Menu").click
+    @browser.a(id: "logout_sidebar_link").click
+
+    # verify successful log out
+    expect(@browser.div(class: "login_logo").present?)
   end
 end
