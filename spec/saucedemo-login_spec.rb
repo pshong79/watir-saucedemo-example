@@ -24,6 +24,8 @@ describe "login : " do
   end
 
   it "standard_user - successful" do
+    # DESCRIPTION : This test verifies loggin in successfully.
+
     @browser.text_field(id: "user-name").set standard_user
     @browser.text_field(id: "password").set password
     @browser.button(value: "LOGIN").click
@@ -34,6 +36,8 @@ describe "login : " do
   end
 
   it "ERROR HANDLING : locked_out_user" do
+    # DESCRIPTION : This test verifies error-handling when a user is locked out.
+
     @browser.text_field(id: "user-name").set locked_out_user
     @browser.text_field(id: "password").set password
     @browser.button(value: "LOGIN").click
@@ -44,6 +48,10 @@ describe "login : " do
 
   # NOTE : This test SHOULD fail because image file it is expecting is not the one that is actually loaded.
   it "problem_user - successful" do
+    # DESCRIPTION : This test verifies a problem with the user.
+    #               In this case, the images do not correctly load.
+    #               This test SHOULD fail.
+
     @browser.text_field(id: "user-name").set problem_user
     @browser.text_field(id: "password").set password
     @browser.button(value: "LOGIN").click
@@ -59,6 +67,8 @@ describe "login : " do
   end
 
   it "ERROR HANDLING : standard_user - not successful" do
+    # DESCRIPTION : This test verifies error-handling for when the password is not valid.
+
     @browser.text_field(id: "user-name").set standard_user
     @browser.text_field(id: "password").set invalid_password
     @browser.button(value: "LOGIN").click
@@ -68,6 +78,8 @@ describe "login : " do
   end
 
   it "ERROR HANDLING : username is required" do
+    # DESCRIPTION : This test verifies error-handling for when the username field is blank.
+
     @browser.text_field(id: "password").set invalid_password
     @browser.button(value: "LOGIN").click
 
@@ -76,10 +88,27 @@ describe "login : " do
   end
 
   it "ERROR HANDLING : password is required" do
+    # DESCRIPTION : This test verifies error-handling for when the password field is blank.
+
     @browser.text_field(id: "user-name").set standard_user
     @browser.button(value: "LOGIN").click
 
     # verify lock out error message displays
     expect(@browser.h3.text).to eq(password_required_error)
+  end
+
+  it "log out - successful" do
+    # DESCRIPTION : This test verifies successfully logging out.
+
+    @browser.text_field(id: "user-name").set standard_user
+    @browser.text_field(id: "password").set password
+    @browser.button(value: "LOGIN").click
+
+    # log out
+    @browser.button(text: "Open Menu").click
+    @browser.a(id: "logout_sidebar_link").click
+
+    # verify successful log out
+    expect(@browser.div(class: "login_credentials_wrap").present?).to be true
   end
 end
