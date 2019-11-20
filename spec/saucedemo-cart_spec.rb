@@ -21,7 +21,7 @@ describe "item : " do
 
     @browser.goto "https://www.saucedemo.com/cart.html"
 
-    # verify empty cart page
+    # verify empty cart page.
     expect(@browser.div(class: "subheader").text).to eq("Your Cart")
     expect(@browser.span(class: "fa-layers-counter shopping_cart_badge").present?).to be false
     expect(@browser.div(class: "cart_quantity_label").present?).to be true
@@ -43,7 +43,7 @@ describe "item : " do
       @browser.button(text: "ADD TO CART").click
       @browser.a(class: "shopping_cart_link fa-layers fa-fw").click
 
-      # verify on cart page
+      # verify on cart page.
       expect(@browser.div(class: "inventory_item_name").text).to eq(item_name)
       expect(@browser.div(class: "cart_quantity").text).to eq("1")
       expect(@browser.div(class: "inventory_item_price").text).to eq(item_price)
@@ -52,7 +52,7 @@ describe "item : " do
     it "multiple items in cart" do
       # DESCRIPTION : This test verifies when there are multiple items added to the cart.
 
-      # add first item
+      # add first item.
       @browser.goto "https://www.saucedemo.com/inventory-item.html?id=2"
       item1_name = @browser.div(class: "inventory_details_name").text
       item1_price = @browser.div(class: "inventory_details_price").text
@@ -60,7 +60,7 @@ describe "item : " do
 #      puts item1_price
       @browser.button(text: "ADD TO CART").click
 
-      # add second item
+      # add second item.
       @browser.goto "https://www.saucedemo.com/inventory-item.html?id=4"
       item2_name = @browser.div(class: "inventory_details_name").text
       item2_price = @browser.div(class: "inventory_details_price").text
@@ -69,7 +69,7 @@ describe "item : " do
       @browser.button(text: "ADD TO CART").click
       @browser.a(class: "shopping_cart_link fa-layers fa-fw").click
 
-      # verify on cart page
+      # verify on cart page.
       expect(@browser.div(class: "inventory_item_name", :index => 0).text).to eq(item1_name)
       expect(@browser.div(class: "cart_quantity").text).to eq("1")
       expect(@browser.div(class: "inventory_item_price", :index => 0).text).to eq(item1_price)
@@ -84,7 +84,7 @@ describe "item : " do
     it "only 1 item in cart" do
       # DESCRIPTION : This test verifies when the one item in the cart gets removed.
 
-      # add item
+      # add item.
       @browser.goto "https://www.saucedemo.com/inventory-item.html?id=0"
       item_name = @browser.div(class: "inventory_details_name").text
       item_price = @browser.div(class: "inventory_details_price").text
@@ -93,12 +93,12 @@ describe "item : " do
       @browser.button(text: "ADD TO CART").click
       @browser.a(class: "shopping_cart_link fa-layers fa-fw").click
 
-      # verify on cart page
+      # verify on cart page.
       expect(@browser.div(class: "inventory_item_name").text).to eq(item_name)
       expect(@browser.div(class: "cart_quantity").text).to eq("1")
       expect(@browser.div(class: "inventory_item_price").text).to eq(item_price)
 
-      # remove item
+      # remove item.
       @browser.button(text: "REMOVE").click
       expect(@browser.span(class: "fa-layers-counter shopping_cart_badge").present?).to be false
       expect(@browser.div(class: "cart_item").present?).to be false
@@ -115,7 +115,7 @@ describe "item : " do
     it "multiple different items" do
       # DESCRIPTION : This test verifies removing one item when there are multiple items in the cart.
 
-      # add first item
+      # add first item.
       @browser.goto "https://www.saucedemo.com/inventory-item.html?id=2"
       item1_name = @browser.div(class: "inventory_details_name").text
       item1_price = @browser.div(class: "inventory_details_price").text
@@ -123,7 +123,7 @@ describe "item : " do
 #      puts item1_price
       @browser.button(text: "ADD TO CART").click
 
-      # add second item
+      # add second item.
       @browser.goto "https://www.saucedemo.com/inventory-item.html?id=4"
       item2_name = @browser.div(class: "inventory_details_name").text
       item2_price = @browser.div(class: "inventory_details_price").text
@@ -134,23 +134,23 @@ describe "item : " do
       expect(item_count).to eq("2")
       @browser.a(class: "shopping_cart_link fa-layers fa-fw").click
 
-      # remove one item
+      # remove one item.
       @browser.button(text: "REMOVE", :index => 1).click
       item_count = @browser.span(class: "fa-layers-counter shopping_cart_badge").text
 
-      # first item remains
+      # first item remains.
       expect(item_count).to eq("1")
       expect(@browser.div(class: "inventory_item_name", :index => 0).text).to eq(item1_name)
       expect(@browser.div(class: "cart_quantity").text).to eq("1")
       expect(@browser.div(class: "inventory_item_price", :index => 0).text).to eq(item1_price)
 
-      # removed item no longer appears
+      # removed item no longer appears.
       expect(@browser.div(class: "inventory_item_name", :index => 1).present?).to be false
 
-      # remove second item
+      # remove second item.
       @browser.button(text: "REMOVE").click
 
-      # cart is empty
+      # cart is empty.
       expect(@browser.span(class: "fa-layers-counter shopping_cart_badge").present?).to be false
       expect(@browser.div(class: "cart_item").present?).to be false
 
@@ -163,7 +163,7 @@ describe "item : " do
     @browser.goto "https://www.saucedemo.com/cart.html"
     @browser.a(text: "Continue Shopping").click
 
-    #verify going back to inventory page.
+    # verify going back to inventory page.
     page_url = @browser.url
     expect(page_url).to eq("https://www.saucedemo.com/inventory.html")
     expect(@browser.a(id: "item_4_img_link")).to have_attributes(href: "https://www.saucedemo.com/inventory-item.html?id=4")
@@ -179,14 +179,14 @@ describe "item : " do
 #      puts item_price
     @browser.button(text: "ADD TO CART").click
 
-    # go to cart
+    # go to cart.
     @browser.a(class: "shopping_cart_link fa-layers fa-fw").click
     expect(@browser.div(class: "inventory_item_name").text).to eq(item_name)
 
-    # click item name
+    # click item name.
     @browser.div(class: "inventory_item_name").click
 
-    # verify item's detail page loaded
+    # verify item's detail page loaded.
     expect(@browser.div(class: "inventory_details_name").text).to eq(item_name)
   end
 

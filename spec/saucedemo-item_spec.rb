@@ -19,13 +19,13 @@ describe "item : " do
   it "view - click image" do
     # DESCRIPTION : This test verifies pages loading the item's detail page when clicking the item's image.
 
-    # multiple objects have the same class
-    # ":index => 2" is used to click on the third item
+    # multiple objects have the same class.
+    # ":index => 2" is used to click on the third item.
     item_name = @browser.div(class: "inventory_item_name", :index => 2).text
 #    puts "item : " + item_name
     @browser.img(class: "inventory_item_img", :index => 2).click
 
-    # confirm correct item loaded
+    # confirm correct item loaded.
     expect(@browser.div(class: "inventory_details_name").text).to eq(item_name)
   end
 
@@ -36,7 +36,7 @@ describe "item : " do
 #    puts "item : " + item_name
     @browser.div(class: "inventory_item_name", :index => 5).click
 
-    # confirm correct item loaded
+    # confirm correct item loaded.
     expect(@browser.div(class: "inventory_details_name").text).to eq(item_name)
   end
 
@@ -50,7 +50,7 @@ describe "item : " do
 #    puts "item : " + item_name
     @browser.div(class: "inventory_item_name", :index => 4).click
 
-    # confirm correct item loaded
+    # confirm correct item loaded.
     expect(@browser.div(class: "inventory_details_name").text).to eq(item_name)
 
     @browser.button(class: "inventory_details_back_button").click
@@ -71,7 +71,7 @@ describe "item : " do
 #    puts "item : " + item_name
     @browser.div(class: "inventory_item_name", :index => 4).click
 
-    # confirm correct item loaded
+    # confirm correct item loaded.
     expect(@browser.div(class: "inventory_details_name").text).to eq(item_name)
 
     @browser.back
@@ -89,10 +89,10 @@ describe "item : " do
 #    puts "item : " + item_name
     @browser.div(class: "inventory_item_name", :index => 3).click
 
-    # confirm correct item loaded
+    # confirm correct item loaded.
     expect(@browser.div(class: "inventory_details_name").text).to eq(item_name)
 
-    # get price of item
+    # get price of item.
     price = @browser.div(class: "inventory_details_price").text_field
     items_in_cart_flag = @browser.span(class: "fa-layers-counter shopping_cart_badge").present?
     puts items_in_cart_flag
@@ -100,10 +100,10 @@ describe "item : " do
     if items_in_cart_flag
       items_count = @browser.span(class: "fa-layers-counter shopping_cart_badge").text.to_i
     else
-      # do nothing and continue
+      # do nothing and continue.
     end
 
-    # add item to cart
+    # add item to cart.
     @browser.button(class: "btn_primary btn_inventory").click
 
     if items_in_cart_flag
